@@ -194,6 +194,18 @@ func TestNormalize(t *testing.T) {
 	}
 }
 
+func TestNormalize_Flat(t *testing.T) {
+	scores := []float64{1., 1., 1., 1., 1.}
+	zscores := Normalize(scores, nil)
+	compareArrays([]float64{0., 0., 0., 0., 0.}, zscores, t)
+	if got, want := stat.Mean(zscores, nil), 0.; !floatEquals(got, want) {
+		t.Errorf("Expected mean=%f, got=%f", want, got)
+	}
+	if got, want := stat.StdDev(zscores, nil), 0.; !floatEquals(got, want) {
+		t.Errorf("Expected standard deviation=%f, got=%f", want, got)
+	}
+}
+
 const epsilon float64 = 0.0001
 
 func floatEquals(a, b float64) bool {
